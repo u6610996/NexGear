@@ -10,4 +10,6 @@ const CustomerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Customer || mongoose.model("Customer", CustomerSchema);
+// Delete cached model to always use the latest schema
+if (mongoose.models.Customer) delete mongoose.models.Customer;
+export default mongoose.model("Customer", CustomerSchema);

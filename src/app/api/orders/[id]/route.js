@@ -15,7 +15,7 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT update order — deduct stock when status changes FROM pending
+// PUT update order — manage stock based on status transitions
 export async function PUT(request, { params }) {
   try {
     await connectDB();
@@ -24,12 +24,26 @@ export async function PUT(request, { params }) {
     const existing = await Order.findById(params.id);
     if (!existing) return NextResponse.json({ error: "Order not found" }, { status: 404 });
 
-    // Deduct stock only when transitioning away from "pending"
-    if (existing.status === "pending" && body.status && body.status !== "pending") {
-      for (const item of existing.items) {
-        await Product.findByIdAndUpdate(item.productId, {
-          $inc: { stock: -item.quantity },
-        });
+    if (body.status && body.status !== existing.status) {
+      const from = existing.status;
+      const to = body.status;
+
+      // pending → processing/completed: deduct stock
+      if (from === "pending" && to !== "cancelled") {
+        for (const item of existing.items) {
+          await Product.findByIdAndUpdate(item.productId, {
+            $inc: { stock: -item.quantity },
+          });
+        }
+      }
+
+      // processing/completed → cancelled: restore stock
+      if (from !== "pending" && from !== "cancelled" && to === "cancelled") {
+        for (const item of existing.items) {
+          await Product.findByIdAndUpdate(item.productId, {
+            $inc: { stock: +item.quantity },
+          });
+        }
       }
     }
 
