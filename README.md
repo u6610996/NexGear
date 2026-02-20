@@ -3,8 +3,17 @@
 ---
 
 ## 👥 Team Members
-| 6610909 Ratchanon Puwapattarapokin |
-| 6610996 Worachai Aranchot |
+
+| Name | GitHub |
+|------|--------|
+| Ratchanon Puwapattarapokin | [github.com/u6610909](https://github.com/u6610909) |
+| Worachai Aranchot | [github.com/u6610996](https://github.com/u6610996) |
+
+---
+
+## 📋 Project Description
+
+NexGear is a web-based sales management system for gaming gear stores. Staff can manage product inventory, customer records, and sales orders through a complete CRUD interface backed by a REST API and MongoDB database.
 
 ---
 
@@ -18,5 +27,3 @@
 | **Tailwind CSS** | Styling |
 | **Lucide React** | Icons |
 | **Azure VM** | Production deployment |
-
----
