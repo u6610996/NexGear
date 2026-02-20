@@ -3,8 +3,8 @@
 ---
 
 ## 👥 Team Members
-| 6610909 | Ratchanon Puwapattarapokin |
-| 6610996 | Worachai Aranchot |
+| 6610909 Ratchanon Puwapattarapokin |
+| 6610996 Worachai Aranchot |
 
 ---
 
