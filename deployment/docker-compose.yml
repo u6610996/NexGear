@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  nexgear:
+    image: nexgear:1.0
+    container_name: backend-server
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb+srv://wad_01_admin:YOUR_PASSWORD@wad-01.byqypzn.mongodb.net/nexgear?appName=wad-01
+    restart: unless-stopped
+
+  nginx:
+    image: jonasal/nginx-certbot:latest
+    container_name: nginx
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=worachai.tanny@gmail.com
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+      - ./user_conf.d:/etc/nginx/user_conf.d
+    depends_on:
+      - nexgear
+
+volumes:
+  nginx_secrets:
